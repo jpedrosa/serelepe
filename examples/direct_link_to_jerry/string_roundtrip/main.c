@@ -69,7 +69,11 @@ trip_handler (const jerry_value_t func_obj_val __attribute__((unused)), /**< fun
                const jerry_value_t args_p[], /**< function arguments */
                const jerry_length_t args_cnt) /**< number of function arguments */
 {
-  printf("never\n");
+  jerry_size_t req_sz = jerry_get_string_size (args_p[0]);
+  jerry_char_t str_buf_p[req_sz + 1];
+  jerry_string_to_char_buffer (args_p[0], str_buf_p, req_sz);
+  str_buf_p[req_sz] = '\0';
+  printf("never %d (%s)\n", req_sz, str_buf_p);
   return args_p[0];
 } /* trip_handler */
 
